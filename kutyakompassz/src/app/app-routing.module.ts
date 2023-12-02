@@ -4,11 +4,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { SearchDogComponent } from './components/search-dog/search-dog.component';
 import { FoundDogComponent } from './components/found-dog/found-dog.component';
+import { AuthComponent } from './components/auth/auth.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'found', component: FoundDogComponent },
   { path: 'search', component: SearchDogComponent },
+  { path: 'auth', component: AuthComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];
 

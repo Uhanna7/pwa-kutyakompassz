@@ -42,6 +42,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { AuthComponent } from './components/auth/auth.component';
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -53,7 +56,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     FooterComponent,
     PostComponent,
     FormComponent,
-    ImageSliderComponent
+    ImageSliderComponent,
+    AuthComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,7 +79,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatInputModule, 
     MatRadioModule,
     MatTooltipModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [ScreenTrackingService, UserTrackingService],
   bootstrap: [AppComponent],
