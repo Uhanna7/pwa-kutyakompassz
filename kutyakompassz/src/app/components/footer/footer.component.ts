@@ -2,12 +2,11 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  selector: 'app-footer',
+  templateUrl: './footer.component.html',
+  styleUrls: ['./footer.component.scss'],
 })
-export class AppComponent {
-  title = 'kutyakompassz';
+export class FooterComponent {
   isPhonePortrait = false;
 
   constructor(private responsive: BreakpointObserver) {}

@@ -1,0 +1,43 @@
+<div class="flex flex-column justify-content-center align-items-center w-full container">
+    <mat-card class="flex flex-column gap-4 w-11 card">
+        <mat-card-header>
+          <div mat-card-avatar class="pi pi-heart-fill"></div>
+          <mat-card-title>
+            <span>Festés</span>
+          </mat-card-title>
+          <mat-card-subtitle>
+            <span>2022. november 9.</span>
+          </mat-card-subtitle>
+        </mat-card-header>
+        <div>
+            <img mat-card-image class="max-w-full w-full">
+            <app-image-slider [images]="images"></app-image-slider>
+        </div>
+        <mat-card-content>
+          <p>
+            The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+            A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+            bred for hunting.
+            The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+            A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+            bred for hunting.
+          </p>
+        </mat-card-content>
+        <mat-card-actions class="flex justify-content-end align-items-center">
+          <button 
+            mat-button 
+            matTooltip="Nem láttam!"
+            color="warn">
+            <i class="pi pi-thumbs-down"></i>
+          </button>
+          <button 
+            mat-button 
+            matTooltip="Tényleg ott van!"
+            color="accent">
+            <i class="pi pi-thumbs-up"></i>
+          </button>
+        </mat-card-actions>
+    </mat-card>
+</div>
+
+

@@ -2,12 +2,12 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  selector: 'app-found-dog',
+  templateUrl: './found-dog.component.html',
+  styleUrls: ['./found-dog.component.scss']
 })
-export class AppComponent {
-  title = 'kutyakompassz';
+export class FoundDogComponent implements OnInit {
+
   isPhonePortrait = false;
 
   constructor(private responsive: BreakpointObserver) {}
@@ -21,4 +21,5 @@ export class AppComponent {
       }
     });
   }
+
 }
