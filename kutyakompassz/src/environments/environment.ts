@@ -4,15 +4,15 @@
 
 export const environment = {
   firebase: {
-    projectId: 'pwa-kutyakompassz',
-    appId: '1:1038043023102:web:50475bc1c3c82778fe47a',
+    projectId: 'kutyakompassz-a5417',
+    apiKey: 'AIzaSyDSyeBs8QeRcnxQ2rWxt-eJurBZyNBF0Gc',
+    authDomain: 'kutyakompassz-a5417.firebaseapp.com',
     databaseURL:
       'https://kutyakompassz-a5417-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'pwa-kutyakompassz.appspot.com',
-    apiKey: 'AIzaSyD8yaOb9mwKk9SxRet2KMXOjc0khssqHxE',
-    authDomain: 'pwa-kutyakompassz.firebaseapp.com',
-    messagingSenderId: '1038043023102',
-    measurementId: 'G-W8FESB0R8S',
+    storageBucket: 'kutyakompassz-a5417.appspot.com',
+    messagingSenderId: '633457295956',
+    appId: '1:633457295956:web:abedd490688f25be8423c1',
+    measurementId: 'G-DWH9HM88FQ',
   },
   production: false,
 };
