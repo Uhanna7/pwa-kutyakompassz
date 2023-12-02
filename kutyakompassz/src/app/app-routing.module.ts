@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { HomeComponent } from './components/home/home.component';
+import { AuthComponent } from './components/auth/auth.component';
 import { SearchDogComponent } from './components/search-dog/search-dog.component';
 import { FoundDogComponent } from './components/found-dog/found-dog.component';
-import { AuthComponent } from './components/auth/auth.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
