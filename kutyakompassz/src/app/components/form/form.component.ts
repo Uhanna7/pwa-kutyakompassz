@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DatabaseService } from 'src/app/services/db.service';
 
 @Component({
   selector: 'app-form',
@@ -7,49 +8,23 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./form.component.scss'],
 })
 export class FormComponent {
-
+  @Input() type!: string;
   postForm: FormGroup;
-  imageForm: FormGroup;
-  registForm: FormGroup;
-  loginForm: FormGroup;
+  // imageForm: FormGroup;
 
   isLinear = false;
-  clickLogin: boolean = false;
-  clickRegist: boolean = false;
 
-  constructor(private fb: FormBuilder) {
-    // Inicializáld a Reactive formot a FormBuilder segítségével
-    this.registForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      passwordAgain: ['', [Validators.required, Validators.minLength(6)]],
-      temporaryAdoptiveParent: ['', Validators.required]
-    });
-
-    this.loginForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]]
-    });
+  constructor(private fb: FormBuilder, private dbService: DatabaseService) {
 
     this.postForm = this.fb.group({
       title: ['', Validators.required],
       description: ['', [Validators.required, Validators.maxLength(500)]],
-      images: ['', [Validators.required, Validators.minLength(6)]]
+      location: ['', Validators.required],
     });
 
-    this.imageForm = this.fb.group({
-      images: [null]
-    });
-  }
-
-  onLogin() {
-    this.clickLogin = true;
-    this.clickRegist = false;
-  }
-
-  onRegist() {
-    this.clickRegist = true;
-    this.clickLogin = false;
+    // this.imageForm = this.fb.group({
+    //   images: ['' , Validators.required]
+    // });
   }
 
   onFileSelected(event: any) {
@@ -60,26 +35,27 @@ export class FormComponent {
     }
   }
 
-  uploadImages() {
-    console.log("upload");
+  // onFileSelected(event: any) {
+  // Handle file selection if needed
+  // }
 
-    const formData = new FormData();
-    // const images = this.imageForm.get('images').value;
-
-    // for (let i = 0; i < images.length; i++) {
-    //   formData.append('images', images[i]);
-    // }
-  
-    // Itt megteheted a képek feltöltését a szerverre
-    // Például: hívj meg egy HTTP POST kérést a képekkel
-  
-  }
+  // uploadImages() {
+  // Implement image upload logic if needed
+  // }
 
   onSubmit() {
-    // A form elküldése esetén itt kezelheted az adatokat
     if (this.postForm.valid) {
       console.log(this.postForm.value);
-      // További logika: például HTTP kérést küldhetsz a szerverre
+      let current_post = {
+        title: this.postForm.value.title,
+        description: this.postForm.value.description,
+        location: this.postForm.value.location,
+        // images: this.imageForm.value.images,
+        date: new Date().toISOString(),
+        type: this.type,
+      };
+      
+      this.dbService.addNewPost(current_post);
     }
   }
 }

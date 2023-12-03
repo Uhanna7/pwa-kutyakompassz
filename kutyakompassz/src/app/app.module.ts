@@ -12,7 +12,6 @@ import { PostComponent } from './components/post/post.component';
 import { ImageSliderComponent } from './components/image-slider/image-slider.component';
 import { FormComponent } from './components/form/form.component';
 import { AuthComponent } from './components/auth/auth.component';
-import { PostService } from './services/post.service';
 
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';

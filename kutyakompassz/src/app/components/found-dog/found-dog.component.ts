@@ -1,6 +1,7 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
-import { PostService } from 'src/app/services/post.service';
+import { Post } from 'src/app/models/post.model';
+import { DatabaseService } from 'src/app/services/db.service';
 
 @Component({
   selector: 'app-found-dog',
@@ -8,12 +9,13 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./found-dog.component.scss'],
 })
 export class FoundDogComponent implements OnInit {
-  posts: any[] = [];
   isPhonePortrait = false;
+  posts: Post[] = [];
+  type = 'found';
 
   constructor(
     private responsive: BreakpointObserver,
-    private postService: PostService
+    private dbService: DatabaseService
   ) {}
 
   ngOnInit() {
@@ -25,12 +27,15 @@ export class FoundDogComponent implements OnInit {
       }
     });
 
-    this.getPosts();
+    this.loadPosts();
   }
 
-  getPosts() {
-    this.postService.getPosts().subscribe((data: any) => {
+  loadPosts() {
+    this.dbService.getPosts().subscribe((data) => {
       this.posts = data;
+      console.log(this.posts);
     });
   }
+
+
 }

@@ -5,7 +5,7 @@
                 <ng-template matStepLabel>Adj címet a bejegyzésnek</ng-template>
                 <form [formGroup]="postForm">
                     <mat-form-field appearance="fill">
-                        <mat-label>Cím</mat-label>
+                        <mat-label name="title">Cím</mat-label>
                         <input matInput formControlName="title" autocomplete="off" placeholder="Bejegyzés címe">
                     </mat-form-field>
                     <div>
@@ -17,7 +17,7 @@
                 <ng-template matStepLabel>Adj leírást a bejegyzésnek</ng-template>
                 <form [formGroup]="postForm">
                     <mat-form-field appearance="fill">
-                        <mat-label>Leírás</mat-label>
+                        <mat-label name="description">Leírás</mat-label>
                         <input matInput formControlName="description" type="text" autocomplete="off" placeholder="Bejegyzés tartalma">
                     </mat-form-field>
                     <div>
@@ -29,26 +29,26 @@
                 <ng-template matStepLabel>Hol láttad/találtad a kutyát?</ng-template>
                 <form [formGroup]="postForm">
                     <mat-form-field appearance="fill">
-                        <mat-label>Hely</mat-label>
-                        <input matInput formControlName="description" type="text" autocomplete="off" placeholder="Bejegyzés tartalma">
+                        <mat-label name="location">Hely</mat-label>
+                        <input matInput formControlName="location" type="text" autocomplete="off" placeholder="Bejegyzés tartalma">
                     </mat-form-field>
                     <div>
                         <button mat-button matStepperNext>Következő</button>
                     </div>
                 </form>
             </mat-step>
-            <mat-step>
+            <!-- <mat-step>
                 <ng-template matStepLabel>Tölts fel képeket</ng-template>
-                <form [formGroup]="imageForm" (ngSubmit)="uploadImages()">
-                    <form [formGroup]="imageForm" (ngSubmit)="uploadImages()">
-                        <input type="file" (change)="onFileSelected($event)" multiple>
+                <form [formGroup]="postForm">
+                    <form [formGroup]="postForm">
+                        <input type="file" name="images" (change)="onFileSelected($event)" multiple>
                         <button mat-raised-button type="submit" color="accent" style="margin: 1rem">Feltöltés</button>
                     </form>
                     <div>
                         <button mat-button matStepperNext>Következő</button>
                     </div>
                 </form>
-            </mat-step>
+            </mat-step> -->
             <mat-step>
               <ng-template matStepLabel>KÉSZ</ng-template>
               <div class="flex gap-4">

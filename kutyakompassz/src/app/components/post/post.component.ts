@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-
+import { DatabaseService } from 'src/app/services/db.service';
+import { Post } from 'src/app/models/post.model';
 
 @Component({
   selector: 'app-post',
@@ -8,8 +9,14 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
   styleUrls: ['./post.component.scss']
 })
 export class PostComponent {
+  @Input() post: Post = {
+    title: '',
+    description: '',
+    date: '',
+    location: '',
+    type: '',
+  };
   
-
   images: string[] = [
     '../assets/blog1.png',
     '../assets/blog2.png',
@@ -20,9 +27,7 @@ export class PostComponent {
 
   isPhonePortrait = false;
   
-  constructor(private responsive: BreakpointObserver) {
-    
-  }
+  constructor(private responsive: BreakpointObserver) {}
 
   ngOnInit() {
     this.responsive.observe(Breakpoints.HandsetPortrait)
@@ -35,5 +40,7 @@ export class PostComponent {
         }
 
     });
+
   }
+
 }
