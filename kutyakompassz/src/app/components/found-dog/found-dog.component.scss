@@ -29,7 +29,8 @@ $background-grey: #212529;
 .title {
     min-height: 5vh;
     font-size: 2rem;
-    padding: 1rem;
+    padding: 0;
+    text-align: center;
 }
 
 app-post {
@@ -52,4 +53,10 @@ app-post {
         justify-content: center;
         align-items: center;
     }
+}
+
+.auth {
+    border: solid 0.125rem $accent-green;
+    background-color: $basic-grey;
+    border-radius: 1.5rem;
 }

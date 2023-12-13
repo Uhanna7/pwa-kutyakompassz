@@ -9,7 +9,7 @@
                 <button routerLinkActive="active" mat-button routerLink="/home">Kezdőlap</button>
                 <button routerLinkActive="active" mat-button routerLink="/found">Kutyát találtam!</button>
                 <button routerLinkActive="active" mat-button routerLink="/search">Kutyát keresek!</button>
-                <button routerLinkActive="active" mat-button routerLink="/auth">Bejelentkezés/Regisztráció</button>
+                <button *ngIf="user" mat-raised-button color="accent" (click)="logout()">Kijelentkezés</button>
             </div>
         </div>
     </mat-toolbar>

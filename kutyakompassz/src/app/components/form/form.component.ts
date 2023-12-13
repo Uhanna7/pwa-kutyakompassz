@@ -1,61 +1,103 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatabaseService } from 'src/app/services/db.service';
+import { StorageService } from 'src/app/services/storage.service';
+
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
 })
-export class FormComponent {
+export class FormComponent implements OnInit {
   @Input() type!: string;
   postForm: FormGroup;
-  // imageForm: FormGroup;
+  imageForm: FormGroup;
+
+  images: any[] = [];
+
+  user: any;
 
   isLinear = false;
 
-  constructor(private fb: FormBuilder, private dbService: DatabaseService) {
-
+  constructor(
+    private fb: FormBuilder,
+    private dbService: DatabaseService,
+    private afAuth: AngularFireAuth,
+    private storageService: StorageService
+  ) {
     this.postForm = this.fb.group({
       title: ['', Validators.required],
       description: ['', [Validators.required, Validators.maxLength(500)]],
       location: ['', Validators.required],
     });
 
-    // this.imageForm = this.fb.group({
-    //   images: ['' , Validators.required]
-    // });
+    this.imageForm = this.fb.group({
+      images: ['', Validators.required],
+    });
+  }
+
+  ngOnInit(): void {
+    this.afAuth.authState.subscribe((user) => {
+      this.user = user;
+    });
   }
 
   onFileSelected(event: any) {
-    console.log("kepfeltoltes");
-    if (event.target.files.length > 0) {
+    if (
+      event.target.files.length > 0 &&
+      event.target.files.length < 5 &&
+      this.imageForm.get('images')
+    ) {
       const fileArray = Array.from(event.target.files);
-      // this.imageForm.get('images').setValue(fileArray);
+      const imagesControl = this.imageForm.get('images');
+
+      if (imagesControl) {
+        imagesControl.setValue(fileArray);
+      } else {
+        console.error("The 'images' control is null.");
+      }
     }
   }
 
-  // onFileSelected(event: any) {
-  // Handle file selection if needed
-  // }
+  async onSubmit() {
+    if (this.postForm.valid && this.user) {
+      const downloadURLs = await this.uploadImages();
+      if (downloadURLs) {
+        const current_post = {
+          title: this.postForm.value.title,
+          description: this.postForm.value.description,
+          location: this.postForm.value.location,
+          date: new Date().toISOString(),
+          type: this.type,
+          images: downloadURLs,
+          userId: this.user.uid,
+        };
 
-  // uploadImages() {
-  // Implement image upload logic if needed
-  // }
-
-  onSubmit() {
-    if (this.postForm.valid) {
-      console.log(this.postForm.value);
-      let current_post = {
-        title: this.postForm.value.title,
-        description: this.postForm.value.description,
-        location: this.postForm.value.location,
-        // images: this.imageForm.value.images,
-        date: new Date().toISOString(),
-        type: this.type,
-      };
-      
-      this.dbService.addNewPost(current_post);
+        this.dbService.addNewPost(current_post, this.imageForm.value.images);
+      }
     }
+  }
+
+  private async uploadImages(): Promise<string[] | null> {
+    const images = this.imageForm.value.images;
+    const downloadURLs: string[] = [];
+
+    for (const image of images) {
+      const downloadURL = await this.storageService.uploadImage(
+        image as File,
+        'posts'
+      ).toPromise();
+
+      if (downloadURL) {
+        downloadURLs.push(downloadURL);
+      } else {
+        console.error('Error uploading image:', image);
+        return null;
+      }
+    }
+
+    return downloadURLs;
   }
 }

@@ -4,11 +4,7 @@ export interface Post {
     date?: string;
     description: string;
     location: string;
-    // images: string[];
+    images: string[];
     type: string;
-  }
-  
-  // export interface PostResponse {
-  //   date: string;
-  //   foods: Post;
-  // }
+    userId?: string;
+}

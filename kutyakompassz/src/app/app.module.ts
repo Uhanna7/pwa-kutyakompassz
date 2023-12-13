@@ -45,6 +45,10 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatDialogModule} from '@angular/material/dialog';
+
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AuthDialogComponent } from './components/auth/auth-dialog/auth-dialog.component';
 
 
 @NgModule({
@@ -59,6 +63,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     FormComponent,
     ImageSliderComponent,
     AuthComponent,
+    AuthDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,6 +73,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
+    AngularFireAuthModule,
     BrowserAnimationsModule,
     MatSidenavModule,
     MatIconModule,
@@ -82,7 +88,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatRadioModule,
     MatTooltipModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatDialogModule,
   ],
   providers: [ScreenTrackingService, UserTrackingService],
   bootstrap: [AppComponent],

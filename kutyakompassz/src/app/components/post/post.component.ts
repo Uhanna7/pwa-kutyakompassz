@@ -15,15 +15,11 @@ export class PostComponent {
     date: '',
     location: '',
     type: '',
+    userId: '',
+    images: [],
   };
   
-  images: string[] = [
-    '../assets/blog1.png',
-    '../assets/blog2.png',
-    '../assets/blog3.png',
-    '../assets/blog4.png',
-    '../assets/blog.png',
-  ];
+  images!: string[];
 
   isPhonePortrait = false;
   
@@ -32,15 +28,13 @@ export class PostComponent {
   ngOnInit() {
     this.responsive.observe(Breakpoints.HandsetPortrait)
       .subscribe(result => {
-
         this.isPhonePortrait = false; 
-
         if (result.matches) {
           this.isPhonePortrait = true;
         }
-
     });
 
+    this.images = this.post.images;
   }
 
 }

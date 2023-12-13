@@ -1,6 +1,6 @@
 <div class="flex w-full h-full gap-5 container" [ngClass]="{'phone': isPhonePortrait}">
     <div class="flex flex-column form">
-        <div class="flex flex-column w-full justify-content-center align-content-center overflow-hidden">
+        <div *ngIf="user" class="flex flex-column w-full justify-content-center align-content-center overflow-hidden">
             <div class="flex justify-content-center align-items-start title">
                 <span>ELVESZETT A KUTYÁM</span>
             </div>
@@ -8,8 +8,14 @@
                 <app-form [type]="type"></app-form>
             </div>
         </div>
+        <div *ngIf="!user" class="flex flex-column justify-content-start align-items-center gap-5 w-full h-full">
+            <div class="flex justify-content-center w-8 title">Posztolni csak bejelentkezett felhasználók tudnak!</div>
+            <div class="flex justify-content-center align-items-center w-7 h-10rem auth">
+                <button mat-raised-button color="accent" (click)="openAuthDialog()">Bejelentkezés/Regisztráció</button>
+            </div>
+        </div>
     </div>
-    <div class="flex flex-column align-content-center h-auto block">
+    <div class="flex flex-column align-items-center h-auto block">
         <div *ngFor="let post of posts" class="flex flex-column w-11 h-auto max-h-full gap-5 overflow-auto posts">
             <app-post [post]="post"></app-post>            
         </div>

@@ -1,17 +1,1 @@
-<div *ngIf="auth.user | async as user; else showForm" class="flex w-full container">
-    <p>Welcome, {{ user.email }}!</p>
-    <button (click)="logout()">Logout</button>
-  </div>
-  <ng-template #showForm>
-    <!-- Regisztrációs és bejelentkezési űrlapok itt -->
-    <form (submit)="register(email, password)">
-      <input type="email" name="email" placeholder="Email" [(ngModel)]="email" required>
-      <input type="password" name="password" placeholder="Password" [(ngModel)]="password" required>
-      <button type="submit">Register</button>
-    </form>
-    <form (submit)="login(email, password)">
-      <input type="email" name="email" placeholder="Email" [(ngModel)]="email" required>
-      <input type="password" name="password" placeholder="Password" [(ngModel)]="password" required>
-      <button type="submit">Login</button>
-    </form>
-</ng-template>
+<p>semmi</p>

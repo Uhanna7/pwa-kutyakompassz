@@ -37,18 +37,17 @@
                     </div>
                 </form>
             </mat-step>
-            <!-- <mat-step>
+            <mat-step>
                 <ng-template matStepLabel>Tölts fel képeket</ng-template>
                 <form [formGroup]="postForm">
-                    <form [formGroup]="postForm">
+                    <form [formGroup]="imageForm">
                         <input type="file" name="images" (change)="onFileSelected($event)" multiple>
-                        <button mat-raised-button type="submit" color="accent" style="margin: 1rem">Feltöltés</button>
                     </form>
                     <div>
                         <button mat-button matStepperNext>Következő</button>
                     </div>
                 </form>
-            </mat-step> -->
+            </mat-step>
             <mat-step>
               <ng-template matStepLabel>KÉSZ</ng-template>
               <div class="flex gap-4">
