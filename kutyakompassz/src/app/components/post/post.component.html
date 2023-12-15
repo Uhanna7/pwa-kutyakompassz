@@ -8,6 +8,9 @@
           <mat-card-subtitle>
             <span>{{ post.date | date }}</span>
           </mat-card-subtitle>
+          <div *ngIf="user && user.email === 'admin@admin.com'">
+            <i class="pi pi-times-circle" (click)="deletePost()"></i>
+          </div>
         </mat-card-header>
         <div>
             <img mat-card-image class="max-w-full w-full">

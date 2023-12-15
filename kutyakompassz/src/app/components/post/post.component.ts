@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { DatabaseService } from 'src/app/services/db.service';
 import { Post } from 'src/app/models/post.model';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-post',
@@ -23,10 +24,17 @@ export class PostComponent {
   images!: string[];
 
   isPhonePortrait = false;
+
+  user: any;
   
-  constructor(private responsive: BreakpointObserver, private databaseService: DatabaseService) {}
+  constructor(
+    private responsive: BreakpointObserver,
+    private databaseService: DatabaseService,
+    private afAuth: AngularFireAuth,
+  ) {}
 
   ngOnInit() {
+
     this.responsive.observe(Breakpoints.HandsetPortrait)
       .subscribe(result => {
         this.isPhonePortrait = false; 
@@ -35,6 +43,14 @@ export class PostComponent {
         }
     });
 
+    this.afAuth.authState.subscribe(user => {
+      this.user = user;
+    });
+
     this.images = this.post.images;
+  }
+
+  deletePost() {
+    //this.databaseService.deletePost(this.post.id);
   }
 }

@@ -8,7 +8,7 @@ import { Subject } from 'rxjs';
 })
 export class IDBService {
   private db!: IDBPDatabase;
-  posts: Post[] = []; // Adj hozzá egy tömböt a Post típusú elemek tárolásához
+  posts: Post[] = [];
   postSubject: Subject<Post[]> = new Subject(); // Ezzel értesítheted a komponenseidet a változásokról
 
   constructor() {
@@ -28,7 +28,7 @@ export class IDBService {
     let posts = [];
     this.db.get('posts', 'posts').then((value) => {
       posts = value ? value : [];
-      posts.push({ post, id: posts.length + 1 });
+      posts.push(post);
       this.db.put('posts', posts, 'posts');
     });
   }

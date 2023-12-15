@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Post } from 'src/app/models/post.model';
 import { DatabaseService } from 'src/app/services/db.service';
 import { AuthDialogComponent } from '../auth/auth-dialog/auth-dialog.component';
+import { IDBService } from 'src/app/services/idb.service';
 
 @Component({
   selector: 'app-found-dog',
@@ -12,20 +13,30 @@ import { AuthDialogComponent } from '../auth/auth-dialog/auth-dialog.component';
   styleUrls: ['./found-dog.component.scss'],
 })
 export class FoundDogComponent implements OnInit {
+  isAdmin = false;
   isPhonePortrait = false;
   posts: Post[] = [];
   type = 'found';
+
+  isOnline: boolean;
 
   user: any;
 
   constructor(
     private responsive: BreakpointObserver,
     private dbService: DatabaseService,
+    private idbService: IDBService,
     private afAuth: AngularFireAuth,
     public dialog: MatDialog
-  ) {}
+  ) {
+    this.isOnline = navigator.onLine;
+    window.addEventListener('online', () => this.handleOnlineStatusChange());
+    window.addEventListener('offline', () => this.handleOnlineStatusChange());
+  }
 
   ngOnInit() {
+    this.isAdmin = false;
+
     this.responsive.observe(Breakpoints.HandsetPortrait).subscribe((result) => {
       this.isPhonePortrait = false;
 
@@ -36,6 +47,7 @@ export class FoundDogComponent implements OnInit {
 
     this.afAuth.authState.subscribe(user => {
       this.user = user;
+      this.adminRole();
     });
 
     this.loadPosts();
@@ -43,13 +55,30 @@ export class FoundDogComponent implements OnInit {
 
   loadPosts() {
     this.posts = [];
-    this.dbService.getPosts().subscribe((data) => {
-      for(let i = 0; i < data.length; i++) {
-        if(data[i].type === 'found') {
-          this.posts.push(data[i]);
+
+    if(this.isOnline) {
+      console.log("online");
+      this.dbService.getPosts().subscribe((data) => {
+        for(let i = 0; i < data.length; i++) {
+          if(data[i].type === 'found') {
+            this.posts.push(data[i]);
+          }
         }
-      }
-    });
+        console.log(this.posts);
+      });
+    }
+
+    if(!this.isOnline) {
+      console.log("offline");
+       this.idbService.postSubject.subscribe((posts) => {
+        for(let i = 0; i < posts.length; i++) {
+          if(posts[i].type === 'found') {
+            this.posts.push(posts[i]);
+          }
+        }
+        console.log(this.posts)
+      });
+    }
   }
 
   clearPosts() {
@@ -68,5 +97,14 @@ export class FoundDogComponent implements OnInit {
     });
   }
 
+  adminRole() {
+    if(this.user && this.user.email === 'admin@admin.com') {
+      this.isAdmin = true;
+    }
+  }
+
+  private handleOnlineStatusChange(): void {
+    this.isOnline = navigator.onLine;
+  }
 }
 

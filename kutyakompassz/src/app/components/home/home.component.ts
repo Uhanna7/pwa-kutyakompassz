@@ -10,6 +10,9 @@ export class HomeComponent implements OnInit {
   open: boolean = false;
   isPhonePortrait = false;
 
+  isOnline: boolean;
+
+
   help: {question: string, response: string, open: boolean}[] =
     [
       {
@@ -162,7 +165,16 @@ export class HomeComponent implements OnInit {
     },
   ];
 
-  constructor(private responsive: BreakpointObserver) {}
+
+  constructor(private responsive: BreakpointObserver) {
+    this.isOnline = navigator.onLine;
+    window.addEventListener('online', () => this.handleOnlineStatusChange());
+    window.addEventListener('offline', () => this.handleOnlineStatusChange());
+  }
+
+  private handleOnlineStatusChange(): void {
+    this.isOnline = navigator.onLine;
+  }
 
   ngOnInit() {
     this.responsive.observe(Breakpoints.HandsetPortrait).subscribe((result) => {

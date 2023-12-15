@@ -84,6 +84,8 @@ export class FormComponent implements OnInit {
         this.idbService.addPost(current_post);
       }
     }
+    this.postForm.reset();
+    this.imageForm.reset();
   }
 
   private async uploadImages(): Promise<string[] | null> {

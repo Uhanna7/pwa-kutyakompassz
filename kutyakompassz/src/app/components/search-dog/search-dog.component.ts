@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Post } from 'src/app/models/post.model';
 import { DatabaseService } from 'src/app/services/db.service';
 import { AuthDialogComponent } from '../auth/auth-dialog/auth-dialog.component';
+import { IDBService } from 'src/app/services/idb.service';
 
 @Component({
   selector: 'app-search-dog',
@@ -16,14 +17,21 @@ export class SearchDogComponent {
   posts: Post[] = [];
   type = 'search';
 
+  isOnline: boolean;
+
   user: any;
 
   constructor(
     private responsive: BreakpointObserver,
     private dbService: DatabaseService,
+    private idbService: IDBService,
     private afAuth: AngularFireAuth,
     public dialog: MatDialog
-  ) {}
+  ) {
+    this.isOnline = navigator.onLine;
+    window.addEventListener('online', () => this.handleOnlineStatusChange());
+    window.addEventListener('offline', () => this.handleOnlineStatusChange());
+  }
 
   ngOnInit() {
     this.responsive.observe(Breakpoints.HandsetPortrait).subscribe((result) => {
@@ -42,13 +50,28 @@ export class SearchDogComponent {
   }
 
   loadPosts() {
-    this.dbService.getPosts().subscribe((data) => {
-      for(let i = 0; i < data.length; i++) {
-        if(data[i].type === 'search') {
-          this.posts.push(data[i]);
+    this.posts = [];
+
+    if(this.isOnline) {
+      this.dbService.getPosts().subscribe((data) => {
+        for(let i = 0; i < data.length; i++) {
+          if(data[i].type === 'search') {
+            this.posts.push(data[i]);
+          }
         }
-      }
-    });
+        console.log(this.posts);
+      });
+    }
+
+    if(!this.isOnline) {
+       this.idbService.postSubject.subscribe((posts) => {
+        for(let i = 0; i < posts.length; i++) {
+          if(posts[i].type === 'search') {
+            this.posts.push(posts[i]);
+          }
+        }
+      });
+    }
   }
 
   openAuthDialog() {
@@ -59,5 +82,7 @@ export class SearchDogComponent {
     });
   }
 
-
+  private handleOnlineStatusChange(): void {
+    this.isOnline = navigator.onLine;
+  }
 }
