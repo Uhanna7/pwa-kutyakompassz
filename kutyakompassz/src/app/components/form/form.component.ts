@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatabaseService } from 'src/app/services/db.service';
+import { IDBService } from 'src/app/services/idb.service';
 import { StorageService } from 'src/app/services/storage.service';
-
 
 @Component({
   selector: 'app-form',
@@ -25,7 +25,8 @@ export class FormComponent implements OnInit {
     private fb: FormBuilder,
     private dbService: DatabaseService,
     private afAuth: AngularFireAuth,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private idbService: IDBService
   ) {
     this.postForm = this.fb.group({
       title: ['', Validators.required],
@@ -75,7 +76,12 @@ export class FormComponent implements OnInit {
           userId: this.user.uid,
         };
 
+        console.log(current_post)
+
         this.dbService.addNewPost(current_post, this.imageForm.value.images);
+
+        // IndexedDB mentés
+        this.idbService.addPost(current_post);
       }
     }
   }
@@ -85,10 +91,9 @@ export class FormComponent implements OnInit {
     const downloadURLs: string[] = [];
 
     for (const image of images) {
-      const downloadURL = await this.storageService.uploadImage(
-        image as File,
-        'posts'
-      ).toPromise();
+      const downloadURL = await this.storageService
+        .uploadImage(image as File, 'posts')
+        .toPromise();
 
       if (downloadURL) {
         downloadURLs.push(downloadURL);

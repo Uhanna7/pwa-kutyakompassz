@@ -38,10 +38,11 @@ export class FoundDogComponent implements OnInit {
       this.user = user;
     });
 
-    this.loadPosts(); 
+    this.loadPosts();
   }
 
   loadPosts() {
+    this.posts = [];
     this.dbService.getPosts().subscribe((data) => {
       for(let i = 0; i < data.length; i++) {
         if(data[i].type === 'found') {

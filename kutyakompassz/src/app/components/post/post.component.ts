@@ -10,6 +10,7 @@ import { Post } from 'src/app/models/post.model';
 })
 export class PostComponent {
   @Input() post: Post = {
+    id: 0,
     title: '',
     description: '',
     date: '',
@@ -23,7 +24,7 @@ export class PostComponent {
 
   isPhonePortrait = false;
   
-  constructor(private responsive: BreakpointObserver) {}
+  constructor(private responsive: BreakpointObserver, private databaseService: DatabaseService) {}
 
   ngOnInit() {
     this.responsive.observe(Breakpoints.HandsetPortrait)
@@ -36,5 +37,4 @@ export class PostComponent {
 
     this.images = this.post.images;
   }
-
 }
