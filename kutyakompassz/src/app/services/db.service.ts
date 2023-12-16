@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
-import { Observable } from 'rxjs';
+import { Observable, first } from 'rxjs';
 import { StorageService } from './storage.service';
 import { Post } from '../models/post.model';
 import { forkJoin } from 'rxjs';
@@ -50,6 +50,38 @@ export class DatabaseService {
     }
   }
 
+  getPosts(): Observable<any[]> {
+    return this.afDatabase.list('posts').valueChanges();
+  }
+  
+  deletePost(postId: number) {
+    if (!postId) {
+      console.error('A rekordnak nincs egyedi azonosítója.');
+      return;
+    }
+  
+    const postsRef = this.afDatabase.list<Post>('posts', ref => ref.orderByChild('id').equalTo(postId));
+  
+    postsRef.snapshotChanges().pipe(
+      first()
+    ).subscribe((snapshotChanges) => {
+      const key = snapshotChanges[0].key;
+  
+      if (key) {
+        this.afDatabase.list('posts').remove(key)
+          .then(() => {
+            console.log('Sikeresen törölve:', key);
+          })
+          .catch((error) => {
+            console.error('Hiba történt a törlés során:', error);
+          });
+      } else {
+        console.error('Nem található ilyen rekord az adatbázisban.');
+      }
+    });
+  }
+  
+
   private savePost(post: Post) {
     this.afDatabase.list('posts').push(post)
       .then((item) => {
@@ -59,8 +91,5 @@ export class DatabaseService {
         console.error('Hiba történt:', error);
       });
   }
-
-  getPosts(): Observable<any[]> {
-    return this.afDatabase.list('posts').valueChanges();
-  }
+  
 }

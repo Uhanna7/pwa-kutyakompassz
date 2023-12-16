@@ -50,7 +50,12 @@ export class PostComponent {
     this.images = this.post.images;
   }
 
-  deletePost() {
-    //this.databaseService.deletePost(this.post.id);
+  onDeletePost(post: Post) {
+    console.log("post: " + post);
+    if(!post.id) {
+      return;
+    }
+    this.databaseService.deletePost(post.id);
+    this.databaseService.getPosts();
   }
 }
