@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { isDevMode, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -49,7 +49,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AuthDialogComponent } from './components/auth/auth-dialog/auth-dialog.component';
-
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -90,6 +90,12 @@ import { AuthDialogComponent } from './components/auth/auth-dialog/auth-dialog.c
     ReactiveFormsModule,
     FormsModule,
     MatDialogModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
   providers: [ScreenTrackingService, UserTrackingService],
   bootstrap: [AppComponent],

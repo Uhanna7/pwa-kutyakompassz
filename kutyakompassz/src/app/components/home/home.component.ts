@@ -21,23 +21,13 @@ export class HomeComponent implements OnInit {
         open: false
       },
       {
-        question: 'Mire jó az oldal?', 
-        response: 'Az oldal a gazdiktól elszökött kutyusok hazatalálását és a kóbor kutyák menhelyre/ideiglenes befogadókhoz jutását segíti.',
+        question: 'Hogyan posztolhatok?', 
+        response: 'Kattins a Kutyát találtam/Kutyát keresek menüpontok valamelyikére jelentkezz be/regisztrálj, majd töltsd ki a szükséges űrlapot.',
         open: false
       },
       {
-        question: 'Mire jó az oldal?', 
-        response: 'Az oldal a gazdiktól elszökött kutyusok hazatalálását és a kóbor kutyák menhelyre/ideiglenes befogadókhoz jutását segíti.',
-        open: false
-      },
-      {
-        question: 'Mire jó az oldal?', 
-        response: 'Az oldal a gazdiktól elszökött kutyusok hazatalálását és a kóbor kutyák menhelyre/ideiglenes befogadókhoz jutását segíti.',
-        open: false
-      },
-      {
-        question: 'Mire jó az oldal?', 
-        response: 'Az oldal a gazdiktól elszökött kutyusok hazatalálását és a kóbor kutyák menhelyre/ideiglenes befogadókhoz jutását segíti.',
+        question: 'Hogyan tudok segíteni?', 
+        response: 'Ha kóbor kutyát látsz és nem tudsz rajta segíteni, akkor töltsd fel az oldalra és várj, amíg valaki más indul a kutyus segítségére.',
         open: false
       },
     ];
