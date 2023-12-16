@@ -3,6 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { DatabaseService } from 'src/app/services/db.service';
 import { Post } from 'src/app/models/post.model';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { IDBService } from 'src/app/services/idb.service';
 
 @Component({
   selector: 'app-post',
@@ -30,6 +31,7 @@ export class PostComponent {
   constructor(
     private responsive: BreakpointObserver,
     private databaseService: DatabaseService,
+    private idbService: IDBService,
     private afAuth: AngularFireAuth,
   ) {}
 
@@ -56,6 +58,7 @@ export class PostComponent {
       return;
     }
     this.databaseService.deletePost(post.id);
+    this.idbService.removePost(post);
     this.databaseService.getPosts();
   }
 }

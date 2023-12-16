@@ -41,5 +41,17 @@ export class IDBService {
       this.postSubject.next(this.posts);
     });
   }
+
+  removePost(post: Post) {
+    let posts: Post[] = [];
+    this.db.get('posts', 'posts').then((value) => {
+      posts = value ? value : [];
+      posts = posts.filter((p) => {
+        return p.id !== post.id;
+      });
+      this.db.put('posts', posts, 'posts');
+      this.getPosts();
+    });
+  }
 }
 
