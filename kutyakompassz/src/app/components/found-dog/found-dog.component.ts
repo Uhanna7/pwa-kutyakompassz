@@ -32,6 +32,8 @@ export class FoundDogComponent implements OnInit {
     this.isOnline = navigator.onLine;
     window.addEventListener('online', () => this.handleOnlineStatusChange());
     window.addEventListener('offline', () => this.handleOnlineStatusChange());
+
+    this.loadPosts();
   }
 
   ngOnInit() {
@@ -49,8 +51,19 @@ export class FoundDogComponent implements OnInit {
       this.user = user;
       this.adminRole();
     });
+  }
 
-    this.loadPosts();
+  onPostDeleted(post: Post) {
+    for(let i = 0; i < this.posts.length; i++) {
+      if(this.posts[i].id === post.id) {
+        console.log("post: " + post);
+        this.posts.splice(i, 1);
+      }
+    }
+  }
+
+  onPostAdded(post: Post) {
+    this.posts.unshift(post);
   }
 
   loadPosts() {
@@ -61,7 +74,7 @@ export class FoundDogComponent implements OnInit {
       this.dbService.getPosts().subscribe((data) => {
         for(let i = 0; i < data.length; i++) {
           if(data[i].type === 'found') {
-            this.posts.push(data[i]);
+            this.posts.unshift(data[i]);
           }
         }
         console.log(this.posts);

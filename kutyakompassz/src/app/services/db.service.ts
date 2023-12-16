@@ -79,6 +79,8 @@ export class DatabaseService {
         console.error('Nem található ilyen rekord az adatbázisban.');
       }
     });
+
+    this.getPosts();
   }
   
 

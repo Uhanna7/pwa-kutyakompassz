@@ -16,7 +16,7 @@
             <span>1088, North Street, Alexandria, AU</span>
         </div>
         <div class="right" [ngClass]="{'phone': isPhonePortrait}">
-            <button mat-raised-button color="accent">ADMIN</button>
+            <button mat-raised-button color="accent" (click)="openAuthDialog()">ADMIN</button>
         </div>
     </div>
 </div>

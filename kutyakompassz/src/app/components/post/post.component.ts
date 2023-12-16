@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { DatabaseService } from 'src/app/services/db.service';
 import { Post } from 'src/app/models/post.model';
@@ -21,6 +21,8 @@ export class PostComponent {
     userId: '',
     images: [],
   };
+
+  @Output() deletePost: EventEmitter<Post>;
   
   images!: string[];
 
@@ -33,7 +35,9 @@ export class PostComponent {
     private databaseService: DatabaseService,
     private idbService: IDBService,
     private afAuth: AngularFireAuth,
-  ) {}
+  ) {
+    this.deletePost = new EventEmitter<Post>();
+  }
 
   ngOnInit() {
 
@@ -60,5 +64,7 @@ export class PostComponent {
     this.databaseService.deletePost(post.id);
     this.idbService.removePost(post);
     this.databaseService.getPosts();
+
+    this.deletePost.emit(post);
   }
 }
