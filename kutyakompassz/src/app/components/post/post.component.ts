@@ -57,7 +57,6 @@ export class PostComponent {
   }
 
   onDeletePost(post: Post) {
-    console.log("post: " + post);
     if(!post.id) {
       return;
     }

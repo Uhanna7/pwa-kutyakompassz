@@ -32,8 +32,6 @@ export class FoundDogComponent implements OnInit {
     this.isOnline = navigator.onLine;
     window.addEventListener('online', () => this.handleOnlineStatusChange());
     window.addEventListener('offline', () => this.handleOnlineStatusChange());
-
-    this.loadPosts();
   }
 
   ngOnInit() {
@@ -47,71 +45,65 @@ export class FoundDogComponent implements OnInit {
       }
     });
 
-    this.afAuth.authState.subscribe(user => {
+    this.afAuth.authState.subscribe((user) => {
       this.user = user;
       this.adminRole();
     });
+
+    this.loadPosts();
   }
 
   onPostDeleted(post: Post) {
-    for(let i = 0; i < this.posts.length; i++) {
-      if(this.posts[i].id === post.id) {
-        console.log("post: " + post);
+    for (let i = 0; i < this.posts.length; i++) {
+      if (this.posts[i].id === post.id) {
         this.posts.splice(i, 1);
       }
     }
   }
 
   onPostAdded(post: Post) {
+    console.log('ez it az onPostAdded');
     this.posts.unshift(post);
+    this.loadPosts();
   }
 
   loadPosts() {
+    console.log('ez itt a loadPosts');
     this.posts = [];
 
-    if(this.isOnline) {
-      console.log("online");
+    if (this.isOnline) {
       this.dbService.getPosts().subscribe((data) => {
-        for(let i = 0; i < data.length; i++) {
-          if(data[i].type === 'found') {
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].type === 'found') {
             this.posts.unshift(data[i]);
           }
         }
-        console.log(this.posts);
       });
+
+      console.log('load: ' + this.posts);
     }
 
-    if(!this.isOnline) {
-      console.log("offline");
-       this.idbService.postSubject.subscribe((posts) => {
-        for(let i = 0; i < posts.length; i++) {
-          if(posts[i].type === 'found') {
+    if (!this.isOnline) {
+      this.idbService.postSubject.subscribe((posts) => {
+        for (let i = 0; i < posts.length; i++) {
+          if (posts[i].type === 'found') {
             this.posts.push(posts[i]);
           }
         }
-        console.log(this.posts)
       });
-    }
-  }
-
-  clearPosts() {
-    for(let i = 0; i < this.posts.length; i++) {
-      if(this.posts[i].type === 'search') {
-        this.posts.splice(i, 1);
-      }
     }
   }
 
   openAuthDialog() {
     const dialogRef = this.dialog.open(AuthDialogComponent);
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log('Dialog closed', result);
     });
   }
 
   adminRole() {
-    if(this.user && this.user.email === 'admin@admin.com') {
+    if (this.user && this.user.email === 'admin@admin.com') {
       this.isAdmin = true;
     }
   }
@@ -120,4 +112,3 @@ export class FoundDogComponent implements OnInit {
     this.isOnline = navigator.onLine;
   }
 }
-

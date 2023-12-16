@@ -52,7 +52,6 @@ export class SearchDogComponent {
   onPostDeleted(post: Post) {
     for(let i = 0; i < this.posts.length; i++) {
       if(this.posts[i].id === post.id) {
-        console.log("post: " + post);
         this.posts.splice(i, 1);
       }
     }
@@ -72,7 +71,6 @@ export class SearchDogComponent {
             this.posts.unshift(data[i]);
           }
         }
-        console.log(this.posts);
       });
     }
 
