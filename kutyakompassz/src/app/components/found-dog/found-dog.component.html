@@ -5,7 +5,7 @@
                 <span>TALÁLTAM EGY KUTYÁT</span>
             </div>
             <div class="flex justify-content-center align-items-center w-full">
-                <app-form (addedPost)="onPostAdded($event)" [type]="type"></app-form>
+                <app-form [type]="type"></app-form>
             </div>
         </div>
         <div *ngIf="!user" class="flex flex-column justify-content-start align-items-center gap-5 w-full h-full">

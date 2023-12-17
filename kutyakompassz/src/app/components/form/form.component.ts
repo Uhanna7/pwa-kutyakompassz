@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { Post } from 'src/app/models/post.model';
 import { DatabaseService } from 'src/app/services/db.service';
 import { IDBService } from 'src/app/services/idb.service';
@@ -22,8 +23,6 @@ export class FormComponent implements OnInit {
 
   isLinear = false;
 
-  @Output() addedPost: EventEmitter<Post>;
-
   constructor(
     private fb: FormBuilder,
     private dbService: DatabaseService,
@@ -40,8 +39,6 @@ export class FormComponent implements OnInit {
     this.imageForm = this.fb.group({
       images: ['', Validators.required],
     });
-
-    this.addedPost = new EventEmitter<Post>();
   }
 
   ngOnInit(): void {
@@ -83,8 +80,6 @@ export class FormComponent implements OnInit {
 
         this.dbService.addNewPost(current_post, this.imageForm.value.images);
         this.idbService.addPost(current_post);
-
-        this.addedPost.emit(current_post);
       }
     }
     this.postForm.reset();
@@ -100,7 +95,7 @@ export class FormComponent implements OnInit {
         .uploadImage(image as File, 'posts')
         .toPromise();
 
-      if (downloadURL) {
+      if (downloadURL) {        
         downloadURLs.push(downloadURL);
       } else {
         console.error('Error uploading image:', image);

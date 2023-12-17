@@ -62,7 +62,6 @@ export class PostComponent {
     }
     this.databaseService.deletePost(post.id);
     this.idbService.removePost(post);
-    this.databaseService.getPosts();
 
     this.deletePost.emit(post);
   }

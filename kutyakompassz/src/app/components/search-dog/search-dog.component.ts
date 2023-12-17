@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { MatDialog } from '@angular/material/dialog';
 import { Post } from 'src/app/models/post.model';
@@ -10,9 +10,10 @@ import { IDBService } from 'src/app/services/idb.service';
 @Component({
   selector: 'app-search-dog',
   templateUrl: './search-dog.component.html',
-  styleUrls: ['./search-dog.component.scss']
+  styleUrls: ['./search-dog.component.scss'],
 })
-export class SearchDogComponent {
+export class SearchDogComponent implements OnInit {
+  isAdmin = false;
   isPhonePortrait = false;
   posts: Post[] = [];
   type = 'search';
@@ -31,11 +32,11 @@ export class SearchDogComponent {
     this.isOnline = navigator.onLine;
     window.addEventListener('online', () => this.handleOnlineStatusChange());
     window.addEventListener('offline', () => this.handleOnlineStatusChange());
-
-    this.loadPosts();
   }
 
   ngOnInit() {
+    this.isAdmin = false;
+
     this.responsive.observe(Breakpoints.HandsetPortrait).subscribe((result) => {
       this.isPhonePortrait = false;
 
@@ -44,40 +45,47 @@ export class SearchDogComponent {
       }
     });
 
-    this.afAuth.authState.subscribe(user => {
+    this.afAuth.authState.subscribe((user) => {
       this.user = user;
+      this.adminRole();
     });
+
+    this.loadPosts();
   }
 
   onPostDeleted(post: Post) {
-    for(let i = 0; i < this.posts.length; i++) {
-      if(this.posts[i].id === post.id) {
+    for (let i = 0; i < this.posts.length; i++) {
+      if (this.posts[i].id === post.id) {
         this.posts.splice(i, 1);
       }
     }
   }
 
-  onPostAdded(post: Post) {
-    this.posts.unshift(post);
-  }
-
   loadPosts() {
-    this.posts = [];
-
-    if(this.isOnline) {
+    if (this.isOnline) {
       this.dbService.getPosts().subscribe((data) => {
-        for(let i = 0; i < data.length; i++) {
-          if(data[i].type === 'search') {
+        this.posts = [];
+        this.dbService.counter = data.length;
+
+        for (let i = 0; i < data.length; i++) {
+
+          if (data[i].type === 'search') {
             this.posts.unshift(data[i]);
           }
+          this.posts = this.posts;
         }
       });
+
+      console.log(this.posts);
     }
 
-    if(!this.isOnline) {
-       this.idbService.postSubject.subscribe((posts) => {
-        for(let i = 0; i < posts.length; i++) {
-          if(posts[i].type === 'search') {
+    if (!this.isOnline) {
+      console.log("offline")
+      this.idbService.postSubject.subscribe((posts) => {
+        this.posts = [];
+
+        for (let i = 0; i < posts.length; i++) {
+          if (posts[i].type === 'search') {
             this.posts.push(posts[i]);
           }
         }
@@ -88,9 +96,15 @@ export class SearchDogComponent {
   openAuthDialog() {
     const dialogRef = this.dialog.open(AuthDialogComponent);
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log('Dialog closed', result);
     });
+  }
+
+  adminRole() {
+    if (this.user && this.user.email === 'admin@admin.com') {
+      this.isAdmin = true;
+    }
   }
 
   private handleOnlineStatusChange(): void {

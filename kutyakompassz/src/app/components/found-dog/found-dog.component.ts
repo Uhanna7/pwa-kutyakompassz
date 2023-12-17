@@ -6,6 +6,7 @@ import { Post } from 'src/app/models/post.model';
 import { DatabaseService } from 'src/app/services/db.service';
 import { AuthDialogComponent } from '../auth/auth-dialog/auth-dialog.component';
 import { IDBService } from 'src/app/services/idb.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-found-dog',
@@ -61,30 +62,29 @@ export class FoundDogComponent implements OnInit {
     }
   }
 
-  onPostAdded(post: Post) {
-    console.log('ez it az onPostAdded');
-    this.posts.unshift(post);
-    this.loadPosts();
-  }
-
   loadPosts() {
-    console.log('ez itt a loadPosts');
-    this.posts = [];
-
     if (this.isOnline) {
       this.dbService.getPosts().subscribe((data) => {
+        this.posts = [];
+        this.dbService.counter = data.length;
+
         for (let i = 0; i < data.length; i++) {
+
           if (data[i].type === 'found') {
             this.posts.unshift(data[i]);
           }
+          this.posts = this.posts;
         }
       });
 
-      console.log('load: ' + this.posts);
+      console.log(this.posts);
     }
 
     if (!this.isOnline) {
+      console.log("offline")
       this.idbService.postSubject.subscribe((posts) => {
+        this.posts = [];
+
         for (let i = 0; i < posts.length; i++) {
           if (posts[i].type === 'found') {
             this.posts.push(posts[i]);
