@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -8,10 +8,10 @@ import { MatDialogRef } from '@angular/material/dialog';
   templateUrl: './auth-dialog.component.html',
   styleUrls: ['./auth-dialog.component.scss']
 })
-export class AuthDialogComponent {
+export class AuthDialogComponent implements OnInit{
   authForm!: FormGroup;
   errorMessage: string = '';
-  isRegistration: boolean = false;  // Új mező a regisztrációhoz
+  isRegistration: boolean = false;
 
   constructor(
     private dialogRef: MatDialogRef<AuthDialogComponent>,
@@ -31,7 +31,6 @@ export class AuthDialogComponent {
     const password = this.authForm.get('password')?.value;
 
     if (this.isRegistration) {
-      // Regisztráció
       this.afAuth.createUserWithEmailAndPassword(email, password)
         .then(userCredential => {
           this.dialogRef.close();
@@ -40,7 +39,6 @@ export class AuthDialogComponent {
           this.errorMessage = error.message;
         });
     } else {
-      // Bejelentkezés
       this.afAuth.signInWithEmailAndPassword(email, password)
         .then(userCredential => {
           this.dialogRef.close();

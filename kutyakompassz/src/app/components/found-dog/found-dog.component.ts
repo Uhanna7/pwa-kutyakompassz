@@ -4,9 +4,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { MatDialog } from '@angular/material/dialog';
 import { Post } from 'src/app/models/post.model';
 import { DatabaseService } from 'src/app/services/db.service';
-import { AuthDialogComponent } from '../auth/auth-dialog/auth-dialog.component';
+import { AuthDialogComponent } from '../auth-dialog/auth-dialog.component';
 import { IDBService } from 'src/app/services/idb.service';
-import { take } from 'rxjs';
 
 @Component({
   selector: 'app-found-dog',
@@ -69,7 +68,6 @@ export class FoundDogComponent implements OnInit {
         this.dbService.counter = data.length;
 
         for (let i = 0; i < data.length; i++) {
-
           if (data[i].type === 'found') {
             this.posts.unshift(data[i]);
           }
@@ -81,7 +79,7 @@ export class FoundDogComponent implements OnInit {
     }
 
     if (!this.isOnline) {
-      console.log("offline")
+      console.log('offline');
       this.idbService.postSubject.subscribe((posts) => {
         this.posts = [];
 

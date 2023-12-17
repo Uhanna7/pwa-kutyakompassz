@@ -11,7 +11,6 @@ import { FooterComponent } from './components/footer/footer.component';
 import { PostComponent } from './components/post/post.component';
 import { ImageSliderComponent } from './components/image-slider/image-slider.component';
 import { FormComponent } from './components/form/form.component';
-import { AuthComponent } from './components/auth/auth.component';
 
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
@@ -33,22 +32,22 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatIconModule} from '@angular/material/icon';
-import {MatListModule} from '@angular/material/list';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatButtonModule} from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import {MatCardModule} from '@angular/material/card';
-import {MatStepperModule} from '@angular/material/stepper';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { AuthDialogComponent } from './components/auth/auth-dialog/auth-dialog.component';
+import { AuthDialogComponent } from './components/auth-dialog/auth-dialog.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
@@ -62,7 +61,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     PostComponent,
     FormComponent,
     ImageSliderComponent,
-    AuthComponent,
     AuthDialogComponent,
   ],
   imports: [
@@ -84,7 +82,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     MatCardModule,
     MatStepperModule,
     MatFormFieldModule,
-    MatInputModule, 
+    MatInputModule,
     MatRadioModule,
     MatTooltipModule,
     ReactiveFormsModule,

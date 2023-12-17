@@ -10,7 +10,7 @@ import { IDBService } from 'src/app/services/idb.service';
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.scss']
 })
-export class PostComponent {
+export class PostComponent implements OnInit {
   @Input() post: Post = {
     id: 0,
     title: '',

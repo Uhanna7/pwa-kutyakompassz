@@ -1,8 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { Post } from 'src/app/models/post.model';
 import { DatabaseService } from 'src/app/services/db.service';
 import { IDBService } from 'src/app/services/idb.service';
 import { StorageService } from 'src/app/services/storage.service';

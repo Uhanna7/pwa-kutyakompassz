@@ -1,6 +1,6 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
-import { AuthDialogComponent } from '../auth/auth-dialog/auth-dialog.component';
+import { AuthDialogComponent } from '../auth-dialog/auth-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -8,11 +8,13 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
 })
-export class FooterComponent {
+export class FooterComponent implements OnInit {
   isPhonePortrait = false;
 
-  constructor(private responsive: BreakpointObserver, public dialog: MatDialog
-    ) {}
+  constructor(
+    private responsive: BreakpointObserver,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.responsive.observe(Breakpoints.HandsetPortrait).subscribe((result) => {
@@ -27,7 +29,7 @@ export class FooterComponent {
   openAuthDialog() {
     const dialogRef = this.dialog.open(AuthDialogComponent);
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log('Dialog closed', result);
     });
   }
