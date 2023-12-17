@@ -76,8 +76,8 @@ export class FormComponent implements OnInit {
           userId: this.user.uid,
         };
 
-        this.dbService.addNewPost(current_post, this.imageForm.value.images);
         this.idbService.addPost(current_post);
+        this.dbService.addNewPost(current_post, this.imageForm.value.images);
       }
     }
     this.postForm.reset();
