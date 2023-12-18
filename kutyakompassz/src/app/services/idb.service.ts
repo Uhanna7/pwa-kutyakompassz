@@ -28,7 +28,6 @@ export class IDBService {
     let posts = [];
     this.db.get('posts', 'posts').then((value) => {
       posts = value ? value : [];
-      post.id = posts.length + 1;
       posts.push(post);
       this.db.put('posts', posts, 'posts');
     });

@@ -65,7 +65,6 @@ export class FoundDogComponent implements OnInit {
     if (this.isOnline) {
       this.dbService.getPosts().subscribe((data) => {
         this.posts = [];
-        this.dbService.counter = data.length;
 
         for (let i = 0; i < data.length; i++) {
           if (data[i].type === 'found') {

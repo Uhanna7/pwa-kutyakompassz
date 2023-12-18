@@ -9,7 +9,6 @@ import firebase from 'firebase/compat/app'; // Import the necessary package
 
 @Injectable({ providedIn: 'root' })
 export class DatabaseService {
-  public counter: number = 0;
 
   constructor(
     private afDatabase: AngularFireDatabase,
@@ -17,12 +16,8 @@ export class DatabaseService {
     private firestore: AngularFirestore
   ) {}
 
-  private getNextId(): number {
-    return ++this.counter;
-  }
 
   addNewPost(post: Post, images: FileList | null) {
-    post.id = this.getNextId();
 
     if (images && images.length > 0) {
       const imageObservables: Observable<string | null>[] = [];
@@ -37,7 +32,7 @@ export class DatabaseService {
     return this.afDatabase.list('posts').valueChanges();
   }
 
-  deletePost(postId: number) {
+  deletePost(postId: string) {
     if (!postId) {
       console.error('A rekordnak nincs egyedi azonosítója.');
       return;

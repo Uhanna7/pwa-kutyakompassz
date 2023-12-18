@@ -12,7 +12,7 @@ import { IDBService } from 'src/app/services/idb.service';
 })
 export class PostComponent implements OnInit {
   @Input() post: Post = {
-    id: 0,
+    id: '',
     title: '',
     description: '',
     date: '',
@@ -28,6 +28,8 @@ export class PostComponent implements OnInit {
 
   isPhonePortrait = false;
 
+  isOnline: boolean;
+
   user: any;
   
   constructor(
@@ -37,6 +39,9 @@ export class PostComponent implements OnInit {
     private afAuth: AngularFireAuth,
   ) {
     this.deletePost = new EventEmitter<Post>();
+    this.isOnline = navigator.onLine;
+    window.addEventListener('online', () => this.handleOnlineStatusChange());
+    window.addEventListener('offline', () => this.handleOnlineStatusChange());
   }
 
   ngOnInit() {
@@ -57,12 +62,17 @@ export class PostComponent implements OnInit {
   }
 
   onDeletePost(post: Post) {
-    if(!post.id) {
+    if(!post.id || !this.isOnline) {
+      console.log("Offline módban nem lehet törölni!")
       return;
     }
     this.databaseService.deletePost(post.id);
     this.idbService.removePost(post);
 
     this.deletePost.emit(post);
+  }
+
+  private handleOnlineStatusChange(): void {
+    this.isOnline = navigator.onLine;
   }
 }

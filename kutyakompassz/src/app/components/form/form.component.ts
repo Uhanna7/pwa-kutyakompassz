@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatabaseService } from 'src/app/services/db.service';
 import { IDBService } from 'src/app/services/idb.service';
 import { StorageService } from 'src/app/services/storage.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-form',
@@ -67,6 +68,7 @@ export class FormComponent implements OnInit {
       const downloadURLs = await this.uploadImages();
       if (downloadURLs) {
         const current_post = {
+          id: uuidv4(),
           title: this.postForm.value.title,
           description: this.postForm.value.description,
           location: this.postForm.value.location,
