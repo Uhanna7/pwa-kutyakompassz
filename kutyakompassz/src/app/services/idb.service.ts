@@ -26,11 +26,15 @@ export class IDBService {
 
   addPost(post: Post) {
     let posts = [];
-    this.db.get('posts', 'posts').then((value) => {
-      posts = value ? value : [];
+    this.db.get('posts', 'posts').then((value) => {      
+      posts = value ?? [];
       posts.push(post);
       this.db.put('posts', posts, 'posts');
     });
+  }
+
+  addPosts(posts: Post[]) {
+    this.db.put('posts', posts, 'posts');
   }
 
   getPosts() {
@@ -54,4 +58,3 @@ export class IDBService {
     });
   }
 }
-

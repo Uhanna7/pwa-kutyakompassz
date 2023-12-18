@@ -66,15 +66,14 @@ export class FoundDogComponent implements OnInit {
       this.dbService.getPosts().subscribe((data) => {
         this.posts = [];
 
+        this.idbService.addPosts(data);
+
         for (let i = 0; i < data.length; i++) {
           if (data[i].type === 'found') {
             this.posts.unshift(data[i]);
           }
-          this.posts = this.posts;
         }
       });
-
-      console.log(this.posts);
     }
 
     if (!this.isOnline) {
