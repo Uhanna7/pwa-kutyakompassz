@@ -49,6 +49,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AuthDialogComponent } from './components/auth-dialog/auth-dialog.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -95,7 +96,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
       registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
-  providers: [ScreenTrackingService, UserTrackingService],
+  providers: [ScreenTrackingService, UserTrackingService, AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

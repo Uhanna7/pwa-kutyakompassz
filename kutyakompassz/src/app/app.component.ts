@@ -1,5 +1,6 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ export class AppComponent implements OnInit {
   title = 'kutyakompassz';
   isPhonePortrait = false;
 
-  constructor(private responsive: BreakpointObserver) {}
+  constructor(private responsive: BreakpointObserver, private authService: AuthService) {}
 
   ngOnInit() {
     this.responsive.observe(Breakpoints.HandsetPortrait).subscribe((result) => {
@@ -20,5 +21,7 @@ export class AppComponent implements OnInit {
         this.isPhonePortrait = true;
       }
     });
+
+    this.authService.autoLogoutOnPageClose();
   }
 }
