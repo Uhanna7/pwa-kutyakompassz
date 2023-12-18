@@ -3,9 +3,7 @@ import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { Observable, first } from 'rxjs';
 import { StorageService } from './storage.service';
 import { Post } from '../models/post.model';
-import { forkJoin } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import firebase from 'firebase/compat/app'; // Import the necessary package
 
 @Injectable({ providedIn: 'root' })
 export class DatabaseService {
@@ -20,7 +18,6 @@ export class DatabaseService {
   addNewPost(post: Post, images: FileList | null) {
 
     if (images && images.length > 0) {
-      const imageObservables: Observable<string | null>[] = [];
       post.images = post.images.filter((url) => url !== null) as string[];
       this.savePost(post);
     } else {

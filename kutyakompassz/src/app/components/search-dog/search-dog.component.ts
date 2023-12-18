@@ -78,7 +78,6 @@ export class SearchDogComponent implements OnInit {
     }
 
     if (!this.isOnline) {
-      console.log('offline');
       this.idbService.postSubject.subscribe((posts) => {
         this.posts = [];
 

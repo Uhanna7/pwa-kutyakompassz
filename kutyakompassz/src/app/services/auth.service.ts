@@ -9,10 +9,8 @@ export class AuthService {
 
   autoLogoutOnPageClose() {
     window.addEventListener('beforeunload', () => {
-      // Itt ellenőrizd a Firebase Auth állapotát
       this.afAuth.authState.subscribe((user) => {
         if (user) {
-          // Ha be van jelentkezve, akkor kijelentkezés
           this.afAuth.signOut();
         }
       });
